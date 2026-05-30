@@ -2,8 +2,14 @@
 @section('title', 'Detail Transaksi')
 
 @section('content')
-<div class="mb-4">
-    <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-light"><i class="bi bi-arrow-left me-1"></i> Kembali</a>
+<div class="d-flex justify-content-between align-items-center mb-4 fade-in">
+    <div class="page-header mb-0">
+        <h4>Detail Transaksi</h4>
+        <p>Lihat rincian transaksi penjualan Anda</p>
+    </div>
+    <a href="{{ route('transactions.index') }}" class="btn btn-outline-dark d-flex align-items-center gap-2" style="border-radius: 10px; font-weight: 600; font-size: 0.85rem; border: 1.5px solid #E2E8F0; padding: 0.5rem 1rem;">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
 </div>
 
 <div class="row g-3">
@@ -73,7 +79,17 @@
                     </tr>
                     <tr>
                         <td class="text-muted">Metode</td>
-                        <td><span class="badge bg-{{ $transaction->payment_method === 'cash' ? 'success' : 'info' }}">{{ ucfirst($transaction->payment_method) }}</span></td>
+                        <td>
+                            @if($transaction->payment_method === 'cash')
+                                <span class="badge d-inline-flex align-items-center gap-1 py-1.5 px-2.5" style="background: #F1F5F9; color: #0F172A; border: 1.5px solid #E2E8F0; font-size: 0.72rem; font-weight: 700; border-radius: 6px;">
+                                    <i class="bi bi-cash" style="font-size: 0.8rem;"></i> Cash
+                                </span>
+                            @else
+                                <span class="badge d-inline-flex align-items-center gap-1 py-1.5 px-2.5" style="background: #F1F5F9; color: #0F172A; border: 1.5px solid #E2E8F0; font-size: 0.72rem; font-weight: 700; border-radius: 6px;">
+                                    <i class="bi bi-credit-card" style="font-size: 0.8rem;"></i> Transfer
+                                </span>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-muted">Tanggal</td>

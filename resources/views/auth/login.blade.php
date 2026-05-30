@@ -9,140 +9,217 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #312E81 100%);
+            background-color: #F8FAFC;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-        }
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            animation: fadeInUp 0.6s ease;
+            padding: 1.5rem;
         }
         .login-card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
+            background-color: #FFFFFF;
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+            animation: fadeIn 0.5s ease-out;
         }
-        .brand-section {
+        .brand-badge {
+            width: 72px;
+            height: 72px;
+            background-color: #0F172A;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem auto;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15);
+        }
+        .brand-title {
+            font-weight: 700;
+            color: #0F172A;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+        .brand-subtitle {
+            color: #64748B;
+            font-size: 0.95rem;
             text-align: center;
             margin-bottom: 2rem;
         }
-        .brand-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #4F46E5, #7C3AED);
-            border-radius: 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            color: white;
-            margin-bottom: 1rem;
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
-        }
-        .brand-section h2 {
-            font-weight: 800;
-            color: #1E293B;
-            font-size: 1.5rem;
-        }
-        .brand-section p {
-            color: #64748B;
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-        }
         .form-label {
             font-weight: 600;
-            font-size: 0.8rem;
-            color: #475569;
-            margin-bottom: 0.35rem;
-        }
-        .form-control {
-            border-radius: 12px;
-            border: 1.5px solid #E2E8F0;
-            padding: 0.7rem 1rem;
             font-size: 0.9rem;
+            color: #0F172A;
+            margin-bottom: 0.5rem;
+        }
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+        .input-group-custom i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 1.15rem;
+            z-index: 10;
+        }
+        .input-group-custom .form-control {
+            background-color: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            font-size: 0.95rem;
+            height: 50px;
+            color: #0F172A;
+            transition: all 0.2s ease-in-out;
+        }
+        .input-group-custom .form-control::placeholder {
+            color: #94A3B8;
+        }
+        .input-group-custom .form-control:focus {
+            background-color: #FFFFFF;
+            border-color: #0F172A;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
+            outline: none;
+        }
+        .form-check {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            margin: 0;
+        }
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            border-radius: 6px;
+            border: 1.5px solid #CBD5E1;
+            margin: 0 0.5rem 0 0 !important;
+            cursor: pointer;
             transition: all 0.2s;
+            float: none !important;
         }
-        .form-control:focus {
-            border-color: #4F46E5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        .form-check-input:checked {
+            background-color: #0F172A;
+            border-color: #0F172A;
         }
-        .btn-login {
-            background: linear-gradient(135deg, #4F46E5, #6366F1);
+        .form-check-input:focus {
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
+            border-color: #0F172A;
+        }
+        .form-check-label {
+            font-size: 0.9rem;
+            color: #64748B;
+            cursor: pointer;
+            user-select: none;
+            line-height: 1;
+        }
+        .forgot-password-link {
+            color: #0F172A;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .forgot-password-link:hover {
+            color: #334155;
+        }
+        .btn-submit {
+            background-color: #0F172A;
+            color: #FFFFFF;
             border: none;
             border-radius: 12px;
-            padding: 0.75rem;
             font-weight: 700;
-            font-size: 0.95rem;
-            color: white;
+            font-size: 1rem;
+            height: 50px;
             width: 100%;
-            transition: all 0.2s;
+            transition: all 0.2s ease-in-out;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
         }
-        .btn-login:hover {
-            background: linear-gradient(135deg, #3730A3, #4F46E5);
+        .btn-submit:hover {
+            background-color: #1E293B;
+            color: #FFFFFF;
             transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
-            color: white;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        .footer-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-bottom: 0;
+        }
+        .register-link {
+            color: #0F172A;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .register-link:hover {
+            text-decoration: underline;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="brand-section">
-                <div class="brand-icon">
-                    <i class="bi bi-shop"></i>
-                </div>
-                <h2>ZiePos</h2>
-                <p>Masuk ke sistem kasir Anda</p>
-            </div>
-
-            @if($errors->any())
-            <div class="alert alert-danger py-2 px-3" style="border-radius:10px; font-size:0.85rem;">
-                <i class="bi bi-exclamation-circle me-1"></i>
-                @foreach($errors->all() as $error)
-                    {{ $error }}
-                @endforeach
-            </div>
-            @endif
-
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent" style="border-radius:12px 0 0 12px; border-right:0;"><i class="bi bi-envelope text-muted"></i></span>
-                        <input type="email" name="email" class="form-control" style="border-left:0;" placeholder="email@example.com" value="{{ old('email') }}" required autofocus>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-transparent" style="border-radius:12px 0 0 12px; border-right:0;"><i class="bi bi-lock text-muted"></i></span>
-                        <input type="password" name="password" class="form-control" style="border-left:0;" placeholder="••••••••" required>
-                    </div>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" name="remember" id="remember">
-                    <label class="form-check-label" for="remember" style="font-size:0.85rem;">Ingat saya</label>
-                </div>
-                <button type="submit" class="btn btn-login">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
-                </button>
-            </form>
+    <div class="login-card">
+        <div class="brand-badge">
+            <i class="bi bi-shop text-white" style="font-size: 1.75rem;"></i>
         </div>
+        <h3 class="brand-title">ZiePos</h3>
+        <p class="brand-subtitle">Masuk ke akun Anda untuk melanjutkan</p>
+
+        @if($errors->any())
+        <div class="alert alert-danger border-0 mb-3 py-2.5 px-3" style="border-radius: 12px; font-size: 0.85rem; background-color: #FEF2F2; color: #991B1B;">
+            <i class="bi bi-exclamation-circle-fill me-2" style="color: #EF4444;"></i>
+            @foreach($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Username atau Email</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-person"></i>
+                    <input type="text" name="email" class="form-control" placeholder="Masukkan username atau email" value="{{ old('email') }}" required autofocus>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="remember" id="remember">
+                    <label class="form-check-label" for="remember">Ingat saya</label>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit" style="margin-bottom: 0;">
+                Masuk
+            </button>
+        </form>
     </div>
 </body>
 </html>

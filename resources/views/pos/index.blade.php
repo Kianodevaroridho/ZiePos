@@ -5,15 +5,21 @@
 <style>
     .pos-product-card {
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: none;
-        overflow: hidden;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1.5px solid transparent !important;
         background: white;
         height: 100%;
     }
     .pos-product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(79, 70, 229, 0.2);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        border-color: var(--primary) !important;
+    }
+    .pos-product-card .rounded-circle {
+        transition: transform 0.25s ease;
+    }
+    .pos-product-card:hover .rounded-circle {
+        transform: scale(1.12);
     }
     .pos-product-card .product-img-wrapper {
         position: relative;
@@ -37,7 +43,7 @@
         align-items: center;
         justify-content: center;
         font-size: 2.5rem;
-        color: #4F46E5;
+        color: #0F172A;
         opacity: 0.8;
     }
     .pos-product-card .overlay-add {
@@ -46,7 +52,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(79, 70, 229, 0.4);
+        background: rgba(15, 23, 42, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -136,28 +142,89 @@
 <div class="row g-3">
     <!-- Products Section -->
     <div class="col-lg-8">
-        <!-- Search & Filter -->
-        <div class="card mb-3">
-            <div class="card-body py-2">
-                <form method="GET" class="row g-2 align-items-center">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-search"></i></span>
-                            <input type="text" name="search" class="form-control border-start-0" placeholder="Cari produk..." value="{{ request('search') }}">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <select name="category" class="form-select" onchange="this.form.submit()">
-                            <option value="">Semua Kategori</option>
-                            @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary w-100"><i class="bi bi-search"></i></button>
+        <!-- Search & Category Filters -->
+        <div class="card mb-3 border-0 shadow-sm" style="border-radius: 16px;">
+            <div class="card-body p-3">
+                <!-- Search bar -->
+                <form method="GET" action="{{ route('pos.index') }}" class="mb-3">
+                    <div class="input-group" style="border-radius: 12px; overflow: hidden; background: #F8FAFC; border: 1.5px solid #E2E8F0;">
+                        <span class="input-group-text bg-transparent border-0 pe-1"><i class="bi bi-search text-secondary"></i></span>
+                        <input type="text" name="search" class="form-control bg-transparent border-0" placeholder="Cari produk berdasarkan nama atau SKU..." value="{{ request('search') }}" style="height: 46px; font-size: 0.95rem; color: #0F172A; box-shadow: none !important;">
+                        @if(request('category'))
+                            <input type="hidden" name="category" value="{{ request('category') }}">
+                        @endif
+                        @if(request('search'))
+                            <a href="{{ route('pos.index', ['category' => request('category')]) }}" class="btn bg-transparent border-0 d-flex align-items-center justify-content-center px-3" style="box-shadow: none !important;"><i class="bi bi-x-lg text-secondary" style="font-size:0.9rem;"></i></a>
+                        @endif
                     </div>
                 </form>
+
+                <!-- Horizontal scrollable categories with filled icons -->
+                <div class="d-flex align-items-center gap-2 overflow-x-auto pb-1 category-scroll" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <style>
+                        .category-scroll::-webkit-scrollbar {
+                            display: none;
+                        }
+                        .category-pill {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.4rem;
+                            padding: 0.45rem 1rem;
+                            border-radius: 50rem;
+                            background: #F1F5F9;
+                            color: #475569;
+                            font-weight: 500;
+                            font-size: 0.8rem;
+                            border: 1.5px solid transparent;
+                            text-decoration: none !important;
+                            white-space: nowrap;
+                            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                        }
+                        .category-pill:hover {
+                            background: #E2E8F0;
+                            color: #0F172A;
+                        }
+                        .category-pill.active {
+                            background: #0F172A !important;
+                            color: #FFFFFF !important;
+                            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+                        }
+                        .category-pill i {
+                            font-size: 0.95rem;
+                        }
+                    </style>
+
+                    <a href="{{ route('pos.index', ['search' => request('search')]) }}" class="category-pill {{ !request('category') ? 'active' : '' }}">
+                        <i class="bi bi-grid"></i>
+                        <span>Semua</span>
+                    </a>
+
+                    @foreach($categories as $cat)
+                        @php
+                            $catName = strtolower($cat->name);
+                            $icon = 'bi-tag';
+                            if (str_contains($catName, 'makanan')) {
+                                $icon = 'bi-egg-fried';
+                            } elseif (str_contains($catName, 'minuman') || str_contains($catName, 'drink')) {
+                                $icon = 'bi-cup-hot';
+                            } elseif (str_contains($catName, 'snack') || str_contains($catName, 'cemilan') || str_contains($catName, 'cookie')) {
+                                $icon = 'bi-cookie';
+                            } elseif (str_contains($catName, 'coffee') || str_contains($catName, 'kopi')) {
+                                $icon = 'bi-cup-straw';
+                            } elseif (str_contains($catName, 'dessert') || str_contains($catName, 'kue')) {
+                                $icon = 'bi-cake2';
+                            } elseif (str_contains($catName, 'elektronik') || str_contains($catName, 'gadget')) {
+                                $icon = 'bi-laptop';
+                            } elseif (str_contains($catName, 'pakaian') || str_contains($catName, 'baju')) {
+                                $icon = 'bi-tag';
+                            }
+                        @endphp
+                        <a href="{{ route('pos.index', ['category' => $cat->id, 'search' => request('search')]) }}" class="category-pill {{ request('category') == $cat->id ? 'active' : '' }}">
+                            <i class="bi {{ $icon }}"></i>
+                            <span>{{ $cat->name }}</span>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -168,47 +235,30 @@
                 <form action="{{ route('pos.cart.add') }}" method="POST">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <button type="submit" class="card pos-product-card w-100 text-start" style="background:none;">
-                        <div class="product-img-wrapper">
+                    <button type="submit" class="card pos-product-card w-100 text-start shadow-sm" style="border-radius: 12px; padding: 0.85rem;">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            @php
+                                $catName = strtolower($product->category->name ?? '');
+                                $icon = 'bi-box-seam';
+                                foreach($iconMap as $key => $val) {
+                                    if(str_contains($catName, $key)) {
+                                        $icon = $val;
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; font-size: 0.85rem; background: rgba(15, 23, 42, 0.07); color: #0F172A; flex-shrink:0;">
+                                <i class="bi {{ $icon }}"></i>
+                            </div>
                             @if($product->category)
-                                <span class="category-badge">{{ $product->category->name }}</span>
+                                <span class="badge bg-light text-dark px-2 py-1" style="font-size: 0.65rem; font-weight: 600; background-color: #F1F5F9 !important;">{{ $product->category->name }}</span>
                             @endif
-                            
                             @if($product->stock <= 5)
-                                <span class="stock-badge bg-danger text-white">Limit</span>
+                                <span class="badge bg-danger text-white px-2 py-1 ms-auto" style="font-size: 0.65rem; font-weight: 700;">Limit</span>
                             @endif
-
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" class="product-img" alt="{{ $product->name }}">
-                            @else
-                                <div class="product-placeholder">
-                                    @php
-                                        $catName = strtolower($product->category->name ?? '');
-                                        $icon = 'bi-box-seam';
-                                        foreach($iconMap as $key => $val) {
-                                            if(str_contains($catName, $key)) {
-                                                $icon = $val;
-                                                break;
-                                            }
-                                        }
-                                    @endphp
-                                    <i class="bi {{ $icon }}"></i>
-                                </div>
-                            @endif
-                            
-                            <div class="overlay-add">
-                                <div class="btn-add-circle">
-                                    <i class="bi bi-plus-lg"></i>
-                                </div>
-                            </div>
                         </div>
-                        <div class="p-2 bg-white">
-                            <div class="fw-bold text-truncate" style="font-size:0.85rem; color: var(--text-primary);">{{ $product->name }}</div>
-                            <div class="d-flex justify-content-between align-items-center mt-1">
-                                <div class="fw-bold text-primary" style="font-size:0.9rem;">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-                                <div class="text-muted" style="font-size:0.7rem;">S: {{ $product->stock }}</div>
-                            </div>
-                        </div>
+                        <div class="fw-bold text-truncate mb-1" style="font-size:0.92rem; color: var(--text-primary);">{{ $product->name }}</div>
+                        <div class="fw-bold text-primary" style="font-size:1.05rem;">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
                     </button>
                 </form>
             </div>
@@ -252,25 +302,29 @@
                                 <div class="fw-bold" style="font-size:0.85rem;">Rp {{ number_format($item['subtotal'], 0, ',', '.') }}</div>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center gap-2 mt-1">
-                            <form action="{{ route('pos.cart.update') }}" method="POST" class="d-flex align-items-center gap-1">
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <form action="{{ route('pos.cart.update') }}" method="POST" class="d-flex align-items-center">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $productId }}">
-                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="qty-input">
-                                <button class="btn btn-sm btn-outline-primary" style="padding:0.15rem 0.4rem; font-size:0.7rem;"><i class="bi bi-check-lg"></i></button>
+                                <div class="d-flex align-items-center" style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 8px; padding: 0.25rem 0.5rem;">
+                                    <span class="text-secondary me-1" style="font-size: 0.75rem; font-weight: 600;">Qty:</span>
+                                    <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" onchange="this.form.submit()" class="qty-input border-0 bg-transparent text-center fw-bold" style="width: 38px; font-size: 0.85rem; outline: none; box-shadow: none !important; padding: 0; height: auto;">
+                                </div>
                             </form>
                             <form action="{{ route('pos.cart.remove') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $productId }}">
-                                <button class="btn btn-sm btn-outline-danger" style="padding:0.15rem 0.4rem; font-size:0.7rem;"><i class="bi bi-x-lg"></i></button>
+                                <button class="btn btn-sm btn-light border text-danger d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; border-radius: 8px; font-size: 0.8rem; transition: all 0.2s;" title="Hapus"><i class="bi bi-trash"></i></button>
                             </form>
                         </div>
                     </div>
                     @empty
-                    <div class="text-center py-4 text-muted">
-                        <i class="bi bi-cart-x" style="font-size:2.5rem;"></i>
-                        <p class="mt-2 mb-0" style="font-size:0.85rem;">Keranjang kosong</p>
-                        <p style="font-size:0.75rem;">Klik produk untuk menambahkan</p>
+                    <div class="text-center py-5">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 64px; height: 64px; background: rgba(15, 23, 42, 0.05); color: #94A3B8;">
+                            <i class="bi bi-cart-dash" style="font-size: 1.75rem;"></i>
+                        </div>
+                        <p class="fw-semibold text-dark mb-1" style="font-size:0.9rem;">Keranjang Masih Kosong</p>
+                        <p class="text-muted mb-0" style="font-size:0.75rem;">Pilih produk di sebelah kiri untuk ditambahkan</p>
                     </div>
                     @endforelse
                 </div>
@@ -300,7 +354,7 @@
                             </div>
                             <div id="changeDisplay" class="mt-1" style="font-size:0.8rem; color:var(--success); font-weight:600;"></div>
                         </div>
-                        <button type="button" class="btn btn-success w-100" id="btnCheckout">
+                        <button type="button" class="btn btn-dark w-100 fw-bold py-2.5" id="btnCheckout" style="background: #0F172A; border-color: #0F172A; border-radius: 10px; font-size: 0.95rem; transition: all 0.2s;">
                             <i class="bi bi-check-circle me-1"></i> Bayar Sekarang
                         </button>
                     </form>
@@ -320,7 +374,7 @@ document.getElementById('btnCheckout')?.addEventListener('click', function() {
         text: "Pastikan jumlah pembayaran sudah benar.",
         icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#10B981',
+        confirmButtonColor: '#0F172A',
         cancelButtonColor: '#64748B',
         confirmButtonText: 'Ya, Bayar Sekarang!',
         cancelButtonText: 'Batal',

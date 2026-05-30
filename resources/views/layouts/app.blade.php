@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'POS') }} - @yield('title', 'Dashboard')</title>
+    <title>ZiePos - @yield('title', 'Dashboard')</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,19 +18,19 @@
 
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-light: #6366F1;
-            --primary-dark: #3730A3;
-            --secondary: #7C3AED;
+            --primary: #0F172A;
+            --primary-light: #1E293B;
+            --primary-dark: #020617;
+            --secondary: #475569;
             --success: #10B981;
             --warning: #F59E0B;
             --danger: #EF4444;
             --info: #06B6D4;
             --sidebar-bg: #0F172A;
             --sidebar-hover: #1E293B;
-            --body-bg: #F1F5F9;
+            --body-bg: #F8FAFC;
             --card-bg: #FFFFFF;
-            --text-primary: #1E293B;
+            --text-primary: #0F172A;
             --text-secondary: #64748B;
             --border-color: #E2E8F0;
         }
@@ -39,6 +39,22 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Custom Modern Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.02);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(15, 23, 42, 0.15);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(15, 23, 42, 0.3);
         }
 
         body {
@@ -79,7 +95,7 @@
             justify-content: center;
             font-size: 1.25rem;
             color: white;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
 
         .sidebar-brand h4 {
@@ -127,13 +143,23 @@
         .sidebar-menu .nav-link:hover {
             color: white;
             background-color: rgba(255,255,255,0.06);
-            border-left-color: rgba(99, 102, 241, 0.5);
+            border-left-color: rgba(255, 255, 255, 0.3);
         }
 
         .sidebar-menu .nav-link.active {
             color: white;
-            background: linear-gradient(90deg, rgba(79, 70, 229, 0.2), transparent);
-            border-left-color: var(--primary);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent);
+            border-left-color: #FFFFFF;
+        }
+
+        .sidebar-menu .nav-link.logout-link {
+            color: #EF4444 !important;
+        }
+
+        .sidebar-menu .nav-link.logout-link:hover {
+            color: #F87171 !important;
+            background-color: rgba(239, 68, 68, 0.08);
+            border-left-color: #EF4444;
         }
 
         .sidebar-menu .nav-link i {
@@ -272,7 +298,7 @@
         .btn-primary:hover {
             background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
 
         .btn-success {
@@ -463,7 +489,7 @@
 
         /* Code Elements */
         code {
-            background: rgba(79, 70, 229, 0.08);
+            background: rgba(15, 23, 42, 0.06);
             color: var(--primary);
             padding: 0.15rem 0.45rem;
             border-radius: 6px;
@@ -641,7 +667,7 @@
 
             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link logout-link">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Logout</span>
                 </a>

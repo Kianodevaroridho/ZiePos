@@ -12,7 +12,7 @@
                     <div class="stat-label">Penjualan Hari Ini</div>
                     <div class="stat-value" style="color: var(--primary);">Rp {{ number_format($todaySales, 0, ',', '.') }}</div>
                 </div>
-                <div class="stat-icon" style="background: rgba(79, 70, 229, 0.1); color: var(--primary);">
+                <div class="stat-icon" style="background: rgba(15, 23, 42, 0.08); color: var(--primary);">
                     <i class="bi bi-wallet2"></i>
                 </div>
             </div>
@@ -23,9 +23,9 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <div class="stat-label">Transaksi Hari Ini</div>
-                    <div class="stat-value" style="color: var(--success);">{{ $todayTransactions }}</div>
+                    <div class="stat-value" style="color: #0F172A;">{{ $todayTransactions }}</div>
                 </div>
-                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                <div class="stat-icon" style="background: rgba(15, 23, 42, 0.08); color: #0F172A;">
                     <i class="bi bi-receipt"></i>
                 </div>
             </div>
@@ -36,9 +36,9 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <div class="stat-label">Total Produk Aktif</div>
-                    <div class="stat-value" style="color: var(--info);">{{ $totalProducts }}</div>
+                    <div class="stat-value" style="color: #0F172A;">{{ $totalProducts }}</div>
                 </div>
-                <div class="stat-icon" style="background: rgba(6, 182, 212, 0.1); color: var(--info);">
+                <div class="stat-icon" style="background: rgba(15, 23, 42, 0.08); color: #0F172A;">
                     <i class="bi bi-box-seam"></i>
                 </div>
             </div>
@@ -49,9 +49,9 @@
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <div class="stat-label">Stok Menipis</div>
-                    <div class="stat-value" style="color: var(--danger);">{{ $lowStockProducts }}</div>
+                    <div class="stat-value" style="color: #EF4444;">{{ $lowStockProducts }}</div>
                 </div>
-                <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger);">
+                <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1); color: #EF4444;">
                     <i class="bi bi-exclamation-triangle"></i>
                 </div>
             </div>
@@ -108,7 +108,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-clock-history me-2"></i>Transaksi Terbaru</span>
-                <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
+                <a href="{{ route('transactions.index') }}" class="btn btn-sm btn-outline-dark px-3" style="border-radius: 8px; font-weight: 600; font-size: 0.8rem; border: 1.5px solid #E2E8F0;">Lihat Semua</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -129,9 +129,15 @@
                                 <td>{{ $trx->user->name }}</td>
                                 <td class="fw-bold">Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $trx->payment_method === 'cash' ? 'success' : 'info' }}">
-                                        {{ ucfirst($trx->payment_method) }}
-                                    </span>
+                                    @if($trx->payment_method === 'cash')
+                                        <span class="badge d-inline-flex align-items-center gap-1 py-1 px-2" style="background: #F1F5F9; color: #0F172A; border: 1.5px solid #E2E8F0; font-size: 0.7rem; font-weight: 700; border-radius: 6px;">
+                                            <i class="bi bi-cash" style="font-size: 0.75rem;"></i> Cash
+                                        </span>
+                                    @else
+                                        <span class="badge d-inline-flex align-items-center gap-1 py-1 px-2" style="background: #F1F5F9; color: #0F172A; border: 1.5px solid #E2E8F0; font-size: 0.7rem; font-weight: 700; border-radius: 6px;">
+                                            <i class="bi bi-credit-card" style="font-size: 0.75rem;"></i> Transfer
+                                        </span>
+                                    @endif
                                 </td>
                                 <td style="color: var(--text-secondary); font-size:0.8rem;">{{ $trx->created_at->diffForHumans() }}</td>
                             </tr>
@@ -157,8 +163,8 @@
 <script>
 const ctx = document.getElementById('salesChart').getContext('2d');
 const gradient = ctx.createLinearGradient(0, 0, 0, 280);
-gradient.addColorStop(0, 'rgba(79, 70, 229, 0.3)');
-gradient.addColorStop(1, 'rgba(79, 70, 229, 0.01)');
+gradient.addColorStop(0, 'rgba(15, 23, 42, 0.25)');
+gradient.addColorStop(1, 'rgba(15, 23, 42, 0.005)');
 
 new Chart(ctx, {
     type: 'line',
@@ -167,12 +173,12 @@ new Chart(ctx, {
         datasets: [{
             label: 'Penjualan (Rp)',
             data: {!! json_encode(collect($salesChart)->pluck('total')) !!},
-            borderColor: '#4F46E5',
+            borderColor: '#0F172A',
             backgroundColor: gradient,
             borderWidth: 2.5,
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: '#4F46E5',
+            pointBackgroundColor: '#0F172A',
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
             pointRadius: 5,

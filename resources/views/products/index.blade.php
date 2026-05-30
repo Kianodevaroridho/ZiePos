@@ -7,33 +7,42 @@
         <h4>Daftar Produk</h4>
         <p>Kelola semua produk toko Anda</p>
     </div>
-    <a href="{{ route('products.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-lg me-1"></i> Tambah Produk
-    </a>
+    <div class="d-flex gap-2">
+        <button class="btn btn-outline-dark d-flex align-items-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#searchCollapse" aria-expanded="false" aria-controls="searchCollapse" style="border-radius: 10px; font-weight: 600; font-size: 0.85rem; border: 1.5px solid #E2E8F0; padding: 0.5rem 1.25rem;">
+            <i class="bi bi-search text-secondary"></i> <span style="color: #475569;">Pencarian</span>
+        </button>
+        <a href="{{ route('products.create') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Produk
+        </a>
+    </div>
 </div>
 
-<!-- Filter -->
-<div class="card mb-3 fade-in">
-    <div class="card-body">
-        <form method="GET" class="row g-2 align-items-end">
-            <div class="col-md-5">
-                <label class="form-label">Cari Produk</label>
-                <input type="text" name="search" class="form-control" placeholder="Nama atau SKU..." value="{{ request('search') }}">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">Kategori</label>
-                <select name="category" class="form-select">
-                    <option value="">Semua Kategori</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 d-flex gap-2">
-                <button class="btn btn-primary flex-fill"><i class="bi bi-search me-1"></i> Filter</button>
-                <a href="{{ route('products.index') }}" class="btn btn-light"><i class="bi bi-x-lg"></i></a>
-            </div>
-        </form>
+<!-- Collapsible Pencarian Block -->
+<div class="collapse {{ request('search') || request('category') ? 'show' : '' }} mb-3" id="searchCollapse">
+    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+        <div class="card-body p-3">
+            <form method="GET" class="row g-2 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold" style="font-size: 0.8rem; color: #475569; margin-bottom: 0.4rem;">Cari Produk</label>
+                    <input type="text" name="search" class="form-control" placeholder="Nama atau SKU..." value="{{ request('search') }}" style="border-radius: 10px; height: 42px; font-size: 0.9rem; border: 1.5px solid #E2E8F0;">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold" style="font-size: 0.8rem; color: #475569; margin-bottom: 0.4rem;">Kategori</label>
+                    <select name="category" class="form-select" style="border-radius: 10px; height: 42px; font-size: 0.9rem; border: 1.5px solid #E2E8F0;">
+                        <option value="">Semua Kategori</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button class="btn btn-dark flex-fill fw-bold" style="background: #0F172A; border-color: #0F172A; border-radius: 10px; height: 42px; font-size: 0.9rem;"><i class="bi bi-search me-1"></i> Cari</button>
+                    @if(request('search') || request('category'))
+                        <a href="{{ route('products.index') }}" class="btn btn-light border d-flex align-items-center justify-content-center" style="border-radius: 10px; width: 42px; height: 42px;" title="Reset"><i class="bi bi-x-lg"></i></a>
+                    @endif
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -71,23 +80,19 @@
                         <td>{{ $products->firstItem() + $index }}</td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                @if($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;">
-                                @else
-                                    <div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);display:flex;align-items:center;justify-content:center;">
-                                        @php
-                                            $catName = strtolower($product->category->name ?? '');
-                                            $icon = 'bi-box-seam';
-                                            foreach($iconMap as $key => $val) {
-                                                if(str_contains($catName, $key)) {
-                                                    $icon = $val;
-                                                    break;
-                                                }
+                                <div style="width:32px;height:32px;border-radius:8px;background:rgba(15, 23, 42, 0.07);color:#0F172A;display:flex;align-items:center;justify-content:center;font-size:0.95rem;flex-shrink:0;">
+                                    @php
+                                        $catName = strtolower($product->category->name ?? '');
+                                        $icon = 'bi-box-seam';
+                                        foreach($iconMap as $key => $val) {
+                                            if(str_contains($catName, $key)) {
+                                                $icon = $val;
+                                                break;
                                             }
-                                        @endphp
-                                        <i class="bi {{ $icon }} text-primary"></i>
-                                    </div>
-                                @endif
+                                        }
+                                    @endphp
+                                    <i class="bi {{ $icon }}"></i>
+                                </div>
                                 <span class="fw-semibold">{{ $product->name }}</span>
                             </div>
                         </td>
@@ -106,10 +111,10 @@
                         </td>
                         <td>
                             <div class="d-flex gap-1">
-                                <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i></a>
+                                <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-dark" style="border-radius: 8px; background: #0F172A; border-color: #0F172A;"><i class="bi bi-pencil-square"></i></a>
                                 <form action="{{ route('products.destroy', $product) }}" method="POST">
                                     @csrf @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(this, 'produk')"><i class="bi bi-trash3"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" style="border-radius: 8px; background: #EF4444; border-color: #EF4444;" onclick="confirmDelete(this, 'produk')"><i class="bi bi-trash3"></i></button>
                                 </form>
                             </div>
                         </td>

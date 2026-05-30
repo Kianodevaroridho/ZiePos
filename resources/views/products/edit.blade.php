@@ -2,12 +2,18 @@
 @section('title', 'Edit Produk')
 
 @section('content')
+<div class="d-flex justify-content-between align-items-center mb-4 fade-in">
+    <div class="page-header mb-0">
+        <h4>Edit Produk</h4>
+        <p>Perbarui detail data produk inventaris Anda</p>
+    </div>
+    <a href="{{ route('products.index') }}" class="btn btn-outline-dark d-flex align-items-center gap-2" style="border-radius: 10px; font-weight: 600; font-size: 0.85rem; border: 1.5px solid #E2E8F0; padding: 0.5rem 1.25rem;">
+        <i class="bi bi-arrow-left"></i> Kembali
+    </a>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-lg-7">
-        <div class="mb-4">
-            <a href="{{ route('products.index') }}" class="btn btn-sm btn-light"><i class="bi bi-arrow-left me-1"></i> Kembali</a>
-        </div>
-
         <div class="card fade-in">
             <div class="card-header"><i class="bi bi-pencil-square me-2"></i>Edit Produk</div>
             <div class="card-body">
@@ -46,16 +52,7 @@
                             <input type="number" name="stock" class="form-control" value="{{ old('stock', $product->stock) }}" min="0" required>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Gambar Produk</label>
-                        @if($product->image)
-                            <div class="mb-2">
-                                <img src="{{ asset('storage/' . $product->image) }}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;">
-                            </div>
-                        @endif
-                        <input type="file" name="image" class="form-control" accept="image/*">
-                        <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar</small>
-                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Deskripsi</label>
                         <textarea name="description" class="form-control" rows="3">{{ old('description', $product->description) }}</textarea>

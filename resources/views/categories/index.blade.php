@@ -44,7 +44,7 @@
                         <td>{{ $categories->firstItem() + $index }}</td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <div style="width:32px;height:32px;border-radius:8px;background:rgba(79, 70, 229, 0.1);display:flex;align-items:center;justify-content:center;">
+                                <div style="width:32px;height:32px;border-radius:8px;background:rgba(15, 23, 42, 0.07);display:flex;align-items:center;justify-content:center;color:#0F172A;">
                                     @php
                                         $catName = strtolower($category->name);
                                         $icon = 'bi-tag-fill';
@@ -55,22 +55,22 @@
                                             }
                                         }
                                     @endphp
-                                    <i class="bi {{ $icon }} text-primary"></i>
+                                    <i class="bi {{ $icon }}"></i>
                                 </div>
                                 <span class="fw-semibold">{{ $category->name }}</span>
                             </div>
                         </td>
                         <td><span class="badge bg-light text-dark">{{ $category->slug }}</span></td>
-                        <td><span class="badge bg-primary">{{ $category->products_count }} produk</span></td>
+                        <td><span class="badge" style="background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; font-weight: 600;">{{ $category->products_count }} produk</span></td>
                         <td style="font-size:0.85rem; color: var(--text-secondary);">{{ Str::limit($category->description, 50) ?? '-' }}</td>
                         <td>
                             <div class="d-flex gap-1">
-                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-dark" style="border-radius: 8px; background: #0F172A; border-color: #0F172A;">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <form action="{{ route('categories.destroy', $category) }}" method="POST">
                                     @csrf @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(this, 'kategori')"><i class="bi bi-trash3"></i></button>
+                                    <button type="button" class="btn btn-sm btn-danger" style="border-radius: 8px; background: #EF4444; border-color: #EF4444;" onclick="confirmDelete(this, 'kategori')"><i class="bi bi-trash3"></i></button>
                                 </form>
                             </div>
                         </td>

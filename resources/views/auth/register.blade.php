@@ -9,94 +9,187 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #312E81 100%);
+            background-color: #F8FAFC;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1.5rem;
         }
-        .register-container { width: 100%; max-width: 420px; animation: fadeInUp 0.6s ease; }
         .register-card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
+            background-color: #FFFFFF;
             border-radius: 24px;
             padding: 2.5rem;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+            animation: fadeIn 0.5s ease-out;
         }
-        .brand-section { text-align: center; margin-bottom: 2rem; }
-        .brand-icon {
-            width: 64px; height: 64px;
-            background: linear-gradient(135deg, #4F46E5, #7C3AED);
-            border-radius: 18px;
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 1.75rem; color: white; margin-bottom: 1rem;
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+        .brand-badge {
+            width: 72px;
+            height: 72px;
+            background-color: #0F172A;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem auto;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15);
         }
-        .brand-section h2 { font-weight: 800; color: #1E293B; font-size: 1.5rem; }
-        .brand-section p { color: #64748B; font-size: 0.85rem; }
-        .form-label { font-weight: 600; font-size: 0.8rem; color: #475569; }
-        .form-control {
-            border-radius: 12px; border: 1.5px solid #E2E8F0;
-            padding: 0.7rem 1rem; font-size: 0.9rem;
+        .brand-title {
+            font-weight: 700;
+            color: #0F172A;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 0.25rem;
         }
-        .form-control:focus { border-color: #4F46E5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
-        .btn-register {
-            background: linear-gradient(135deg, #4F46E5, #6366F1);
-            border: none; border-radius: 12px; padding: 0.75rem;
-            font-weight: 700; font-size: 0.95rem; color: white; width: 100%;
+        .brand-subtitle {
+            color: #64748B;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-bottom: 2rem;
         }
-        .btn-register:hover {
-            background: linear-gradient(135deg, #3730A3, #4F46E5);
-            transform: translateY(-1px); box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4); color: white;
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #0F172A;
+            margin-bottom: 0.5rem;
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+        .input-group-custom i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 1.15rem;
+            z-index: 10;
+        }
+        .input-group-custom .form-control {
+            background-color: #F8FAFC;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            font-size: 0.95rem;
+            height: 50px;
+            color: #0F172A;
+            transition: all 0.2s ease-in-out;
+        }
+        .input-group-custom .form-control::placeholder {
+            color: #94A3B8;
+        }
+        .input-group-custom .form-control:focus {
+            background-color: #FFFFFF;
+            border-color: #0F172A;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.08);
+            outline: none;
+        }
+        .btn-submit {
+            background-color: #0F172A;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            height: 50px;
+            width: 100%;
+            transition: all 0.2s ease-in-out;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .btn-submit:hover {
+            background-color: #1E293B;
+            color: #FFFFFF;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+        .footer-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-bottom: 0;
+        }
+        .login-link {
+            color: #0F172A;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="register-container">
-        <div class="register-card">
-            <div class="brand-section">
-                <div class="brand-icon"><i class="bi bi-shop"></i></div>
-                <h2>Daftar Akun</h2>
-                <p>Buat akun baru ZiePos</p>
-            </div>
-
-            @if($errors->any())
-            <div class="alert alert-danger py-2 px-3" style="border-radius:10px; font-size:0.85rem;">
-                @foreach($errors->all() as $error)<div>{{ $error }}</div>@endforeach
-            </div>
-            @endif
-
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
-                <div class="mb-3">
-                    <label class="form-label">Nama Lengkap</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required autofocus>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Konfirmasi Password</label>
-                    <input type="password" name="password_confirmation" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-register mb-3">
-                    <i class="bi bi-person-plus me-1"></i> Daftar
-                </button>
-                <div class="text-center" style="font-size:0.85rem;">
-                    Sudah punya akun? <a href="{{ route('login') }}" style="color:#4F46E5; font-weight:600;">Masuk</a>
-                </div>
-            </form>
+    <div class="register-card">
+        <div class="brand-badge">
+            <i class="bi bi-shop text-white" style="font-size: 1.75rem;"></i>
         </div>
+        <h3 class="brand-title">Daftar Akun</h3>
+        <p class="brand-subtitle">Buat akun baru ZiePos</p>
+
+        @if($errors->any())
+        <div class="alert alert-danger border-0 mb-3 py-2.5 px-3" style="border-radius: 12px; font-size: 0.85rem; background-color: #FEF2F2; color: #991B1B;">
+            <i class="bi bi-exclamation-circle-fill me-2" style="color: #EF4444;"></i>
+            @foreach($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label">Nama Lengkap</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-person"></i>
+                    <input type="text" name="name" class="form-control" placeholder="Masukkan nama lengkap" value="{{ old('name') }}" required autofocus>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" name="email" class="form-control" placeholder="Masukkan email" value="{{ old('email') }}" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-lock"></i>
+                    <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Konfirmasi Password</label>
+                <div class="input-group-custom">
+                    <i class="bi bi-shield-lock"></i>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Konfirmasi password" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">
+                Daftar
+            </button>
+            <p class="footer-text">
+                Sudah punya akun? <a href="{{ route('login') }}" class="login-link">Masuk</a>
+            </p>
+        </form>
     </div>
 </body>
 </html>

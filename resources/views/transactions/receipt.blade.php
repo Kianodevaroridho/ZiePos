@@ -75,7 +75,7 @@
     </div>
 
     <div class="center no-print" style="margin-top: 20px;">
-        <button onclick="window.print()" style="padding: 8px 24px; font-size: 14px; cursor: pointer; background: #4F46E5; color: white; border: none; border-radius: 8px;">
+        <button onclick="window.print()" style="padding: 8px 24px; font-size: 14px; cursor: pointer; background: #0F172A; color: white; border: none; border-radius: 8px;">
             🖨️ Cetak Struk
         </button>
     </div>
