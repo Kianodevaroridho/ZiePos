@@ -86,7 +86,7 @@
                             @forelse($topProducts as $index => $item)
                             <tr>
                                 <td>
-                                    <span class="badge bg-{{ $index < 3 ? 'primary' : 'light text-dark' }}">{{ $index + 1 }}</span>
+                                    <span class="badge" style="background-color: {{ $index < 3 ? '#0F172A' : '#E2E8F0' }}; color: {{ $index < 3 ? 'white' : 'var(--text-secondary)' }};">{{ $index + 1 }}</span>
                                 </td>
                                 <td class="fw-semibold">{{ $item->product->name ?? '-' }}</td>
                                 <td class="text-center">{{ $item->total_qty }}</td>
@@ -127,7 +127,7 @@
                                 </td>
                                 <td>{{ $trx->user->name }}</td>
                                 <td class="text-end fw-bold">Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</td>
-                                <td style="font-size:0.8rem; color:var(--text-secondary);">{{ $trx->created_at->format('d/m H:i') }}</td>
+                                <td style="font-size:0.8rem; color:var(--text-secondary);">{{ $trx->created_at->diffForHumans() }}</td>
                             </tr>
                             @empty
                             <tr>

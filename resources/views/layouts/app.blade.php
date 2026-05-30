@@ -604,6 +604,17 @@
         .fade-in-delay-1 { animation-delay: 0.1s; }
         .fade-in-delay-2 { animation-delay: 0.2s; }
         .fade-in-delay-3 { animation-delay: 0.3s; }
+
+        /* SweetAlert ZiePos Theme */
+        .swal2-container { z-index: 99999 !important; left: 0 !important; width: 100vw !important; margin-left: 0 !important; }
+        .swal2-container.swal2-backdrop-show { background: rgba(15, 23, 42, 0.4) !important; backdrop-filter: blur(4px) !important; }
+        .swal-ziepos { border-radius: 16px !important; font-family: 'Inter', sans-serif !important; padding: 2rem 1.5rem 1.5rem !important; box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important; }
+        .swal-ziepos .swal2-icon { border-color: #0F172A !important; color: #0F172A !important; width: 52px !important; height: 52px !important; margin: 0 auto 1rem !important; }
+        .swal-ziepos .swal2-icon .swal2-icon-content { font-size: 1.5rem !important; }
+        .swal-ziepos .swal2-title { font-size: 1.15rem !important; font-weight: 700 !important; color: #0F172A !important; margin-top: 0 !important; }
+        .swal-ziepos .swal2-html-container { font-size: 0.85rem !important; color: #64748B !important; text-align: center !important; margin-top: 0.5rem !important; }
+        .swal-ziepos .swal2-actions { justify-content: center !important; gap: 10px !important; margin-top: 1.25rem !important; }
+        .swal-ziepos .swal2-actions button { border-radius: 10px !important; font-weight: 600 !important; font-size: 0.85rem !important; padding: 0.55rem 1.5rem !important; min-width: 105px !important; transition: all 0.15s ease !important; box-shadow: none !important; }
     </style>
 
     @stack('styles')
@@ -667,7 +678,7 @@
 
             <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link logout-link">
+                <a href="#" onclick="event.preventDefault(); confirmLogout();" class="nav-link logout-link">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Logout</span>
                 </a>
@@ -734,6 +745,27 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Logout?',
+            text: "Anda yakin ingin keluar dari sistem?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0F172A',
+            cancelButtonColor: '#64748B',
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            customClass: { popup: 'swal-ziepos' }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+    </script>
 
     @stack('scripts')
 </body>

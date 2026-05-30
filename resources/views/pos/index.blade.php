@@ -376,9 +376,10 @@ document.getElementById('btnCheckout')?.addEventListener('click', function() {
         showCancelButton: true,
         confirmButtonColor: '#0F172A',
         cancelButtonColor: '#64748B',
-        confirmButtonText: 'Ya, Bayar Sekarang!',
+        confirmButtonText: 'Ya, Bayar Sekarang',
         cancelButtonText: 'Batal',
-        reverseButtons: true
+        reverseButtons: true,
+        customClass: { popup: 'swal-ziepos' }
     }).then((result) => {
         if (result.isConfirmed) {
             document.getElementById('checkoutForm').submit();

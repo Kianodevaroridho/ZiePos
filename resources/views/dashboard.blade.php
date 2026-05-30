@@ -82,7 +82,7 @@
                 <div class="list-group list-group-flush">
                     @forelse($topProducts as $index => $product)
                     <div class="list-group-item d-flex align-items-center gap-3 border-0 py-3 px-3">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px; height:32px; background: {{ $index < 3 ? 'linear-gradient(135deg, var(--primary), var(--secondary))' : '#E2E8F0' }}; color: {{ $index < 3 ? 'white' : 'var(--text-secondary)' }}; font-size: 0.75rem; font-weight: 700; flex-shrink:0;">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:32px; height:32px; background: {{ $index < 3 ? '#000000' : '#E2E8F0' }}; color: {{ $index < 3 ? 'white' : 'var(--text-secondary)' }}; font-size: 0.75rem; font-weight: 700; flex-shrink:0;">
                             {{ $index + 1 }}
                         </div>
                         <div class="flex-grow-1 min-w-0">

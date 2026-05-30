@@ -102,11 +102,12 @@ function confirmDelete(button, type) {
         text: "Data yang dihapus tidak dapat dikembalikan!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#EF4444',
+        confirmButtonColor: '#0F172A',
         cancelButtonColor: '#64748B',
-        confirmButtonText: 'Ya, Hapus!',
+        confirmButtonText: 'Ya, Hapus',
         cancelButtonText: 'Batal',
-        reverseButtons: true
+        reverseButtons: true,
+        customClass: { popup: 'swal-ziepos' }
     }).then((result) => {
         if (result.isConfirmed) {
             button.closest('form').submit();
